@@ -1,0 +1,112 @@
+.watchlist-card {
+  display: flex;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.wl-poster {
+  flex-shrink: 0;
+  width: 70px;
+  height: 105px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--surface2);
+}
+
+.wl-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.wl-no-poster {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.wl-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.wl-type-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+}
+
+.wl-title {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wl-year {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.wl-genres {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.wl-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.wl-controls select {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.wl-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.rating-input {
+  width: 48px;
+  padding: 4px 6px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.btn-remove {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  font-size: 12px;
+  padding: 4px 10px;
+  align-self: flex-start;
+  margin-top: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-remove:hover:not(:disabled) {
+  background: var(--danger);
+  color: #fff;
+}

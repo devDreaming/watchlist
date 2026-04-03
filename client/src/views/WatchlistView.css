@@ -1,0 +1,65 @@
+.watchlist-view {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.view-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.wl-count {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: -20px;
+}
+
+.wl-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wl-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.wl-section-count {
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--surface2);
+  color: var(--text-muted);
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+.wl-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 640px) {
+  .wl-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.status-msg {
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 32px 0;
+}
+
+.empty-msg {
+  color: var(--text-muted);
+  font-size: 14px;
+}
