@@ -1,0 +1,24 @@
+.cookie-rating {
+  display: flex;
+  gap: 2px;
+}
+
+.cookie {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  line-height: 1;
+  color: var(--text-muted);
+  opacity: 0.3;
+  transition: opacity 0.1s, transform 0.1s, color 0.1s;
+}
+
+.cookie.filled {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.cookie:hover {
+  transform: scale(1.15);
+}

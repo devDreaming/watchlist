@@ -1,6 +1,8 @@
 import { MediaType, WatchStatus } from "@prisma/client";
 import { builder } from "./builder";
 
+export { MediaType, WatchStatus };
+
 export const MediaTypeEnum = builder.enumType(MediaType, {
   name: "MediaType",
 });

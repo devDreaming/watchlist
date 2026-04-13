@@ -5,17 +5,45 @@
 }
 
 :root {
+  /* Colors */
   --bg: #0f0f13;
   --surface: #1a1a24;
   --surface2: #24243a;
   --border: #2e2e45;
   --text: #e8e8f0;
   --text-muted: #7878a0;
+  --text-on-accent: #ffffff;
   --accent: #7c6af7;
   --accent-hover: #9585ff;
   --danger: #e05260;
   --success: #4db87a;
+
+  /* Radii */
+  --radius-sm: 4px;
   --radius: 8px;
+  --radius-full: 99px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+
+  /* Font sizes */
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 14px;
+  --text-md: 15px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+  --text-2xl: 22px;
+
+  /* Layout */
+  --max-width: 1100px;
+  --nav-height: 56px;
   --card-width: 160px;
 }
 

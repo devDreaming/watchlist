@@ -1,5 +1,6 @@
 import { builder } from "./builder";
 import "./enums";
+import { MediaTypeEnum, WatchStatusEnum } from "./enums";
 
 // Movie type
 export const MovieType = builder.prismaObject("Movie", {
@@ -50,8 +51,8 @@ export const WatchableType = builder.unionType("Watchable", {
 export const WatchlistItemType = builder.prismaObject("WatchlistItem", {
   fields: (t) => ({
     id: t.exposeID("id"),
-    mediaType: t.expose("mediaType", { type: "MediaType" }),
-    status: t.expose("status", { type: "WatchStatus" }),
+    mediaType: t.expose("mediaType", { type: MediaTypeEnum }),
+    status: t.expose("status", { type: WatchStatusEnum }),
     rating: t.exposeInt("rating", { nullable: true }),
     createdAt: t.field({
       type: "String",
@@ -78,11 +79,19 @@ export const WatchlistItemType = builder.prismaObject("WatchlistItem", {
 });
 
 // Search result type (not a Prisma model)
-export const SearchResultType = builder.objectType("SearchResult", {
+export const SearchResultType = builder.objectRef<{
+  tmdbId: number;
+  mediaType: "MOVIE" | "SHOW";
+  title: string;
+  overview: string;
+  posterPath: string | null;
+  releaseDate: string | null;
+  firstAirDate: string | null;
+}>("SearchResult").implement({
   fields: (t) => ({
     tmdbId: t.int({ resolve: (r) => r.tmdbId }),
     mediaType: t.field({
-      type: "MediaType",
+      type: MediaTypeEnum,
       resolve: (r) => r.mediaType,
     }),
     title: t.string({ resolve: (r) => r.title }),

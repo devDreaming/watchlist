@@ -12,7 +12,7 @@ const server = new ApolloServer({
 
 const { url } = await startStandaloneServer(server, {
   listen: { port },
-  context: async () => createContext(),
+  context: async ({ req }) => createContext(req),
 });
 
 console.log(`GraphQL server ready at ${url}`);

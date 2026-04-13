@@ -1,5 +1,5 @@
-import { MediaType, WatchStatus } from "@prisma/client";
 import { builder } from "./builder";
+import { MediaType, WatchStatus, MediaTypeEnum, WatchStatusEnum } from "./enums";
 import { WatchlistItemType } from "./types";
 import { fetchMovieDetail, fetchShowDetail } from "../tmdb";
 
@@ -8,10 +8,11 @@ builder.mutationField("addToWatchlist", (t) =>
     type: WatchlistItemType,
     args: {
       tmdbId: t.arg.int({ required: true }),
-      mediaType: t.arg({ type: "MediaType", required: true }),
-      status: t.arg({ type: "WatchStatus", required: true }),
+      mediaType: t.arg({ type: MediaTypeEnum, required: true }),
+      status: t.arg({ type: WatchStatusEnum, required: true }),
     },
     resolve: async (query, _root, args, ctx) => {
+      if (!ctx.userId) throw new Error("Not authenticated");
       const { tmdbId, mediaType, status } = args;
 
       let mediaId: string;
@@ -53,6 +54,7 @@ builder.mutationField("addToWatchlist", (t) =>
         ...query,
         data: {
           mediaType: mediaType as MediaType,
+          userId: ctx.userId,
           ...(mediaType === MediaType.MOVIE ? { movieId: mediaId } : { showId: mediaId }),
           status: status as WatchStatus,
         },
@@ -66,14 +68,15 @@ builder.mutationField("updateWatchlistItem", (t) =>
     type: WatchlistItemType,
     args: {
       id: t.arg.string({ required: true }),
-      status: t.arg({ type: "WatchStatus", required: false }),
+      status: t.arg({ type: WatchStatusEnum, required: false }),
       rating: t.arg.int({ required: false }),
     },
     resolve: async (query, _root, args, ctx) => {
+      if (!ctx.userId) throw new Error("Not authenticated");
       const { id, status, rating } = args;
       return ctx.prisma.watchlistItem.update({
         ...query,
-        where: { id },
+        where: { id, userId: ctx.userId },
         data: {
           ...(status != null ? { status: status as WatchStatus } : {}),
           ...(rating !== undefined ? { rating } : {}),
@@ -90,7 +93,8 @@ builder.mutationField("removeFromWatchlist", (t) =>
       id: t.arg.string({ required: true }),
     },
     resolve: async (_root, args, ctx) => {
-      await ctx.prisma.watchlistItem.delete({ where: { id: args.id } });
+      if (!ctx.userId) throw new Error("Not authenticated");
+      await ctx.prisma.watchlistItem.delete({ where: { id: args.id, userId: ctx.userId } });
       return true;
     },
   })

@@ -4,7 +4,9 @@
       "Bash(npm show:*)",
       "Bash(npx prisma:*)",
       "Bash(node -e \"import\\('@prisma/client'\\).then\\(m => console.log\\(Object.keys\\(m\\)\\)\\)\")",
-      "Bash(node --input-type=module)"
+      "Bash(node --input-type=module)",
+      "Bash(npm install:*)",
+      "Bash(npm list:*)"
     ]
   }
 }

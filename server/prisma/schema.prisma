@@ -51,6 +51,14 @@ model Show {
   watchlistItems WatchlistItem[]
 }
 
+model User {
+  id             String          @id @default(cuid())
+  email          String          @unique
+  passwordHash   String
+  createdAt      DateTime        @default(now())
+  watchlistItems WatchlistItem[]
+}
+
 model WatchlistItem {
   id        String      @id @default(cuid())
   mediaType MediaType
@@ -59,9 +67,11 @@ model WatchlistItem {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
+  userId  String
   movieId String?
   showId  String?
 
+  user  User   @relation(fields: [userId], references: [id])
   movie Movie? @relation(fields: [movieId], references: [id], map: "watchlist_movie")
   show  Show?  @relation(fields: [showId], references: [id], map: "watchlist_show")
 }

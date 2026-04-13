@@ -3,12 +3,11 @@ import { GET_WATCHLIST } from "../graphql/operations";
 import WatchlistCard from "../components/WatchlistCard";
 import "./WatchlistView.css";
 
-const STATUS_ORDER = ["WATCHING", "WANT_TO_WATCH", "COMPLETED", "DROPPED"] as const;
+const STATUS_ORDER = ["WATCHING", "WANT_TO_WATCH", "COMPLETED"] as const;
 const STATUS_LABELS: Record<string, string> = {
   WANT_TO_WATCH: "Want to Watch",
   WATCHING: "Watching",
   COMPLETED: "Completed",
-  DROPPED: "Dropped",
 };
 
 type WatchlistItem = {

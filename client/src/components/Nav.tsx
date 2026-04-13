@@ -1,3 +1,5 @@
+import { useApolloClient } from "@apollo/client";
+import { useAuth } from "../context/AuthContext";
 import "./Nav.css";
 
 type View = "search" | "watchlist";
@@ -8,6 +10,14 @@ interface NavProps {
 }
 
 export default function Nav({ activeView, onNavigate }: NavProps) {
+  const { email, logout } = useAuth();
+  const apolloClient = useApolloClient();
+
+  const handleLogout = () => {
+    logout();
+    apolloClient.clearStore();
+  };
+
   return (
     <nav className="nav">
       <div className="nav-inner">
@@ -25,6 +35,10 @@ export default function Nav({ activeView, onNavigate }: NavProps) {
           >
             My Watchlist
           </button>
+        </div>
+        <div className="nav-user">
+          <span className="nav-email">{email}</span>
+          <button className="nav-logout" onClick={handleLogout}>Log out</button>
         </div>
       </div>
     </nav>

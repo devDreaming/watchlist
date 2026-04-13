@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { UPDATE_WATCHLIST_ITEM, REMOVE_FROM_WATCHLIST, GET_WATCHLIST } from "../graphql/operations";
+import CookieRating from "./CookieRating";
 import "./WatchlistCard.css";
 
 const POSTER_BASE = "https://image.tmdb.org/t/p/w300";
@@ -8,7 +9,6 @@ const STATUS_LABELS: Record<string, string> = {
   WANT_TO_WATCH: "Want to Watch",
   WATCHING: "Watching",
   COMPLETED: "Completed",
-  DROPPED: "Dropped",
 };
 
 interface WatchlistCardProps {
@@ -37,13 +37,8 @@ export default function WatchlistCard({ id, mediaType, status, rating, media }: 
     updateItem({ variables: { id, status: e.target.value } });
   };
 
-  const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseInt(e.target.value, 10);
-    if (!isNaN(val) && val >= 1 && val <= 10) {
-      updateItem({ variables: { id, rating: val } });
-    } else if (e.target.value === "") {
-      updateItem({ variables: { id, rating: null } });
-    }
+  const handleRatingChange = (rating: number | null) => {
+    updateItem({ variables: { id, rating } });
   };
 
   const handleRemove = () => {
@@ -76,20 +71,7 @@ export default function WatchlistCard({ id, mediaType, status, rating, media }: 
               <option key={val} value={val}>{label}</option>
             ))}
           </select>
-          <div className="wl-rating">
-            <label htmlFor={`rating-${id}`}>Rating</label>
-            <input
-              id={`rating-${id}`}
-              type="number"
-              min={1}
-              max={10}
-              placeholder="—"
-              defaultValue={rating ?? ""}
-              onBlur={handleRatingChange}
-              className="rating-input"
-            />
-            <span>/10</span>
-          </div>
+          <CookieRating rating={rating} onChange={handleRatingChange} />
         </div>
         <button className="btn-remove" onClick={handleRemove} disabled={removing}>
           {removing ? "Removing..." : "Remove"}
