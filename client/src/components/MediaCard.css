@@ -64,15 +64,26 @@
   color: var(--text-muted);
 }
 
+.media-card-genres {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
 .media-card-overview {
   font-size: var(--text-sm);
   color: var(--text-muted);
   line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  flex: 1;
+}
+
+.btn-show-more {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 500;
 }
 
 .btn-add {

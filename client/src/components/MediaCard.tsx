@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_TO_WATCHLIST, GET_WATCHLIST } from "../graphql/operations";
 import "./MediaCard.css";
@@ -12,6 +13,7 @@ interface MediaCardProps {
   posterPath: string | null;
   releaseDate?: string | null;
   firstAirDate?: string | null;
+  genres?: string[];
   inWatchlist?: boolean;
 }
 
@@ -28,6 +30,7 @@ export default function MediaCard({
   posterPath,
   releaseDate,
   firstAirDate,
+  genres,
   inWatchlist = false,
 }: MediaCardProps) {
   const [addToWatchlist, { loading }] = useMutation(ADD_TO_WATCHLIST, {
@@ -39,6 +42,10 @@ export default function MediaCard({
       variables: { tmdbId, mediaType, status: "WANT_TO_WATCH" },
     });
   };
+
+  const [expanded, setExpanded] = useState(false);
+  const CHAR_LIMIT = 120;
+  const isLong = overview.length > CHAR_LIMIT;
 
   const year = getYear(releaseDate ?? firstAirDate);
 
@@ -52,10 +59,20 @@ export default function MediaCard({
         )}
       </div>
       <div className="media-card-info">
-        <div className="media-card-badge">{mediaType === "MOVIE" ? "Movie" : "TV Show"}</div>
         <h3 className="media-card-title">{title}</h3>
+        <div className="media-card-badge">{mediaType === "MOVIE" ? "Movie" : "TV Show"}</div>
         <p className="media-card-year">{year}</p>
-        <p className="media-card-overview">{overview || "No description available."}</p>
+        {genres && genres.length > 0 && (
+          <p className="media-card-genres">{genres.slice(0, 3).join(", ")}</p>
+        )}
+        <p className="media-card-overview">
+          {isLong && !expanded ? `${overview.slice(0, CHAR_LIMIT).trimEnd()}…` : (overview || "No description available.")}
+          {isLong && (
+            <button className="btn-show-more" onClick={() => setExpanded(!expanded)}>
+              {expanded ? "show less" : "show more"}
+            </button>
+          )}
+        </p>
         <button className="btn-add" onClick={handleAdd} disabled={loading || inWatchlist}>
           {loading ? "Adding..." : inWatchlist ? "✓ In Watchlist" : "+ Add to Watchlist"}
         </button>

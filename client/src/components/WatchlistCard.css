@@ -5,6 +5,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-3);
+  min-width: 0;
 }
 
 .wl-poster {
@@ -39,6 +40,13 @@
   flex-direction: column;
   gap: var(--space-1);
   min-width: 0;
+  position: relative;
+}
+
+.wl-info-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .wl-type-badge {
@@ -47,6 +55,8 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--accent);
+  text-align: start;
+  padding: var(--space-1) 0 0 0;
 }
 
 .wl-title {
@@ -57,11 +67,7 @@
   text-overflow: ellipsis;
 }
 
-.wl-year {
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-}
-
+.wl-year,
 .wl-genres {
   font-size: var(--text-sm);
   color: var(--text-muted);
@@ -80,18 +86,33 @@
   padding: var(--space-1) var(--space-2);
 }
 
-.btn-remove {
-  background: transparent;
-  color: var(--danger);
-  border: 1px solid var(--danger);
-  font-size: var(--text-sm);
-  padding: var(--space-1) var(--space-2);
-  align-self: flex-start;
-  margin-top: var(--space-1);
-  transition: background 0.15s, color 0.15s;
+.wl-rating {
+    display: flex;
+    justify-content: end;
 }
 
-.btn-remove:hover:not(:disabled) {
-  background: var(--danger);
-  color: var(--text-on-accent);
+.btn-remove {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--muted);
+  padding: var(--space-1);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-sm);
+  transition: color 0.15s;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  &:hover {
+    color: var(--danger);
+    border-color: var(--danger);
+  }
+}
+
+.btn-remove:disabled {
+  color: var(--danger);
+  opacity: 0.7;
 }

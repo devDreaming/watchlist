@@ -1,6 +1,8 @@
 .cookie-rating {
   display: flex;
+  align-items: center;
   gap: 2px;
+  position: relative;
 }
 
 .cookie {
@@ -21,4 +23,19 @@
 
 .cookie:hover {
   transform: scale(1.15);
+}
+
+.cookie:hover::after {
+  content: "Rate";
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface2);
+  color: var(--accent);
+  font-size: var(--text-xs);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  pointer-events: none;
 }

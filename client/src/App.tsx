@@ -18,7 +18,8 @@ export default function App() {
     <div className="app">
       <Nav activeView={view} onNavigate={setView} />
       <main className="main">
-        {view === "search" ? <SearchView /> : <WatchlistView />}
+        <div hidden={view !== "search"}><SearchView /></div>
+        <div hidden={view !== "watchlist"}><WatchlistView /></div>
       </main>
     </div>
   );

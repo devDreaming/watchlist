@@ -47,6 +47,10 @@
   gap: var(--space-2);
 }
 
+.wl-grid > * {
+  min-width: 0;
+}
+
 @media (max-width: 640px) {
   .wl-grid {
     grid-template-columns: 1fr;

@@ -28,6 +28,7 @@ export const SEARCH_MEDIA = gql`
       posterPath
       releaseDate
       firstAirDate
+      genres
     }
   }
 `;

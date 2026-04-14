@@ -60,6 +60,7 @@ export default function SearchView() {
               posterPath: string | null;
               releaseDate: string | null;
               firstAirDate: string | null;
+              genres: string[];
             }) => (
               <MediaCard
                 key={`${item.mediaType}-${item.tmdbId}`}
@@ -70,6 +71,7 @@ export default function SearchView() {
                 posterPath={item.posterPath}
                 releaseDate={item.releaseDate}
                 firstAirDate={item.firstAirDate}
+                genres={item.genres}
                 inWatchlist={watchlistTmdbIds.has(item.tmdbId)}
               />
             ))}

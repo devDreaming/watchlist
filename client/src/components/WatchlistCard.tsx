@@ -1,4 +1,5 @@
 import { useMutation } from "@apollo/client";
+import { RiDeleteBinLine } from "react-icons/ri";
 import { UPDATE_WATCHLIST_ITEM, REMOVE_FROM_WATCHLIST, GET_WATCHLIST } from "../graphql/operations";
 import CookieRating from "./CookieRating";
 import "./WatchlistCard.css";
@@ -59,8 +60,13 @@ export default function WatchlistCard({ id, mediaType, status, rating, media }: 
         )}
       </div>
       <div className="wl-info">
-        <div className="wl-type-badge">{mediaType === "MOVIE" ? "Movie" : "TV Show"}</div>
-        <h3 className="wl-title">{media.title}</h3>
+        <div className="wl-info-header">
+          <h3 className="wl-title">{media.title}</h3>
+          {status === "COMPLETED" && (
+            <CookieRating rating={rating} onChange={handleRatingChange} />
+          )}
+        </div>
+        <p className="wl-type-badge">{mediaType === "MOVIE" ? "Movie" : "TV Show"}</p>
         <p className="wl-year">{year}</p>
         {media.genres.length > 0 && (
           <p className="wl-genres">{media.genres.slice(0, 3).join(", ")}</p>
@@ -71,9 +77,14 @@ export default function WatchlistCard({ id, mediaType, status, rating, media }: 
               <option key={val} value={val}>{label}</option>
             ))}
           </select>
-          <CookieRating rating={rating} onChange={handleRatingChange} />
         </div>
-        <button className="btn-remove" onClick={handleRemove} disabled={removing}>
+        <button
+          className="btn-remove"
+          onClick={handleRemove}
+          disabled={removing}
+          aria-label={removing ? "Removing..." : "Remove"}
+        >
+          <RiDeleteBinLine size={16} />
           {removing ? "Removing..." : "Remove"}
         </button>
       </div>

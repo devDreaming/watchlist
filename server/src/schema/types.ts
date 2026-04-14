@@ -87,6 +87,7 @@ export const SearchResultType = builder.objectRef<{
   posterPath: string | null;
   releaseDate: string | null;
   firstAirDate: string | null;
+  genres: string[];
 }>("SearchResult").implement({
   fields: (t) => ({
     tmdbId: t.int({ resolve: (r) => r.tmdbId }),
@@ -99,5 +100,6 @@ export const SearchResultType = builder.objectRef<{
     posterPath: t.string({ nullable: true, resolve: (r) => r.posterPath }),
     releaseDate: t.string({ nullable: true, resolve: (r) => r.releaseDate }),
     firstAirDate: t.string({ nullable: true, resolve: (r) => r.firstAirDate }),
+    genres: t.stringList({ resolve: (r) => r.genres }),
   }),
 });

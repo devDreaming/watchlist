@@ -44,6 +44,10 @@
   gap: var(--space-3);
 }
 
+.results-grid > * {
+  min-width: 0;
+}
+
 @media (max-width: 640px) {
   .results-grid {
     grid-template-columns: 1fr;
