@@ -83,6 +83,23 @@ export async function searchTmdb(query: string): Promise<TmdbSearchResult[]> {
     }));
 }
 
+export async function fetchPopularPosters(): Promise<string[]> {
+  const [movies, shows] = await Promise.all([
+    tmdbFetch<{ results: Array<{ poster_path: string | null }> }>("/movie/popular?page=1"),
+    tmdbFetch<{ results: Array<{ poster_path: string | null }> }>("/tv/popular?page=1"),
+  ]);
+  const paths = [
+    ...movies.results.map((r) => r.poster_path),
+    ...shows.results.map((r) => r.poster_path),
+  ].filter((p): p is string => p !== null);
+  // shuffle so movies and shows are interleaved
+  for (let i = paths.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paths[i], paths[j]] = [paths[j], paths[i]];
+  }
+  return paths;
+}
+
 export async function fetchMovieDetail(tmdbId: number): Promise<TmdbMovieDetail> {
   return tmdbFetch<TmdbMovieDetail>(`/movie/${tmdbId}`);
 }

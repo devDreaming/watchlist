@@ -7,6 +7,9 @@
 :root {
   /* Colors */
   --bg: #0f0f13;
+  --bg-72: rgba(15, 15, 19, 0.72);
+  --bg-75: rgba(15, 15, 19, 0.75);
+  --bg-88: rgba(15, 15, 19, 0.88);
   --surface: #1a1a24;
   --surface2: #24243a;
   --border: #2e2e45;

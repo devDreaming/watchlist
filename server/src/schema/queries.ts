@@ -2,7 +2,7 @@ import { WatchStatus } from "./enums";
 import { builder } from "./builder";
 import { WatchStatusEnum } from "./enums";
 import { WatchlistItemType, SearchResultType } from "./types";
-import { searchTmdb } from "../tmdb";
+import { searchTmdb, fetchPopularPosters } from "../tmdb";
 
 builder.queryField("watchlist", (t) =>
   t.prismaField({
@@ -18,6 +18,13 @@ builder.queryField("watchlist", (t) =>
         orderBy: { updatedAt: "desc" },
       });
     },
+  })
+);
+
+builder.queryField("popularPosters", (t) =>
+  t.field({
+    type: ["String"],
+    resolve: () => fetchPopularPosters(),
   })
 );
 

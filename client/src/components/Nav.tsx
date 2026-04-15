@@ -35,7 +35,7 @@ export default function Nav({ activeView, onNavigate }: NavProps) {
   return (
     <nav className="nav">
       <div className="nav-inner">
-        <span className="nav-logo">Watchlist</span>
+        <img src="/logo.svg" alt="Watchlist" className="nav-logo" />
         <div className="nav-links">
           <button
             className={`nav-link ${activeView === "search" ? "active" : ""}`}

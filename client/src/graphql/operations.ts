@@ -84,6 +84,12 @@ export const UPDATE_WATCHLIST_ITEM = gql`
   }
 `;
 
+export const GET_POPULAR_POSTERS = gql`
+  query GetPopularPosters {
+    popularPosters
+  }
+`;
+
 export const REMOVE_FROM_WATCHLIST = gql`
   mutation RemoveFromWatchlist($id: String!) {
     removeFromWatchlist(id: $id)
