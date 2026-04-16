@@ -19,7 +19,7 @@ export default function Nav({ activeView, onNavigate }: NavProps) {
 
   const handleLogout = () => {
     logout();
-    apolloClient.clearStore();
+    apolloClient.resetStore();
   };
 
   useEffect(() => {
