@@ -1,6 +1,6 @@
 # Watchlist
 
-A full-stack Movie & TV Show watchlist app built with Node.js, GraphQL (Apollo Server + Pothos), Prisma, React, and Vite.
+A full-stack Movie & TV Show watchlist app. Search for movies and TV shows, track what you want to watch, what you're currently watching, and what you've finished. Rate completed items with a cookie rating.
 
 ## Stack
 
@@ -9,7 +9,9 @@ A full-stack Movie & TV Show watchlist app built with Node.js, GraphQL (Apollo S
 | Backend | Node.js, Apollo Server 4, Pothos (code-first GraphQL), Prisma ORM |
 | Database | PostgreSQL |
 | Frontend | React 18, Vite, Apollo Client |
+| Auth | JWT-based, stored in localStorage |
 | Types | TypeScript throughout, GraphQL Code Generator |
+| Testing | Vitest, React Testing Library, MSW |
 
 ## Setup
 
@@ -100,6 +102,18 @@ Generated types are written to `client/src/gql/`.
 
 ---
 
+## Running tests
+
+```bash
+npm test --workspace=client        # single run
+npm run test:watch --workspace=client  # watch mode
+npm run test:ui --workspace=client     # browser UI
+```
+
+Tests use Vitest + React Testing Library with MSW for GraphQL mocking. No server or database needed.
+
+---
+
 ## Project structure
 
 ```
@@ -113,19 +127,24 @@ watchlist/
 │       │   ├── builder.ts      # Pothos SchemaBuilder
 │       │   ├── enums.ts        # MediaType, WatchStatus enums
 │       │   ├── types.ts        # Movie, Show, WatchlistItem, SearchResult types
-│       │   ├── queries.ts      # watchlist, searchMedia queries
+│       │   ├── queries.ts      # watchlist, searchMedia, popularPosters queries
 │       │   ├── mutations.ts    # addToWatchlist, updateWatchlistItem, removeFromWatchlist
+│       │   ├── auth.ts         # register, login mutations + JWT helpers
 │       │   └── index.ts        # Exports built schema
-│       ├── context.ts          # GraphQL context (Prisma client)
+│       ├── context.ts          # GraphQL context (Prisma client + userId from JWT)
 │       ├── prisma.ts           # Prisma client singleton
 │       ├── tmdb.ts             # TMDB API helpers
 │       └── index.ts            # Apollo Server entry point
 └── client/
     ├── src/
-    │   ├── components/         # Nav, MediaCard, WatchlistCard
-    │   ├── views/              # SearchView, WatchlistView
+    │   ├── components/         # Nav, MediaCard, WatchlistCard, CookieRating
+    │   ├── views/              # AuthView, SearchView, WatchlistView
+    │   ├── context/
+    │   │   └── AuthContext.tsx # Auth state + localStorage persistence
     │   ├── graphql/
     │   │   └── operations.ts   # All GQL queries & mutations
+    │   ├── __tests__/          # Component and view tests
+    │   ├── test/               # MSW server, handlers, render utilities
     │   ├── gql/                # Auto-generated types (after codegen)
     │   ├── App.tsx
     │   └── main.tsx
@@ -138,16 +157,25 @@ watchlist/
 ### Queries
 
 ```graphql
-# Get all watchlist items, optionally filtered by status
+# Get all watchlist items for the logged-in user, optionally filtered by status
 watchlist(status: WatchStatus): [WatchlistItem!]!
 
 # Search TMDB for movies and TV shows
 searchMedia(query: String!): [SearchResult!]!
+
+# Fetch popular poster paths from TMDB (used on the auth landing page)
+popularPosters: [String!]!
 ```
 
 ### Mutations
 
 ```graphql
+# Create a new account
+register(email: String!, password: String!): AuthPayload!
+
+# Log in and receive a JWT
+login(email: String!, password: String!): AuthPayload!
+
 # Fetch metadata from TMDB, upsert Movie/Show, create WatchlistItem
 addToWatchlist(tmdbId: Int!, mediaType: MediaType!, status: WatchStatus!): WatchlistItem!
 
@@ -162,5 +190,5 @@ removeFromWatchlist(id: String!): Boolean!
 
 ```graphql
 enum MediaType { MOVIE, SHOW }
-enum WatchStatus { WANT_TO_WATCH, WATCHING, COMPLETED, DROPPED }
+enum WatchStatus { WANT_TO_WATCH, WATCHING, COMPLETED }
 ```
