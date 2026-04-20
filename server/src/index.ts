@@ -1,6 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { schema } from "./schema";
+import { schema } from "./schema/index.js";
 import { createContext } from "./context";
 
 const port = Number(process.env.PORT) || 4000;
