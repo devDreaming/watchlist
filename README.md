@@ -2,6 +2,8 @@
 
 A full-stack Movie & TV Show watchlist app. Search for movies and TV shows, track what you want to watch, what you're currently watching, and what you've finished. Rate completed items with a cookie rating.
 
+Live demo: https://watchlist-client-production.up.railway.app/
+
 ## Stack
 
 | Layer | Tech |
@@ -48,8 +50,11 @@ Edit `server/.env`:
 ```env
 DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/watchlist?schema=public"
 TMDB_API_KEY="your_tmdb_api_key_here"
+JWT_SECRET="any-local-secret"
 PORT=4000
 ```
+
+> `CLIENT_ORIGIN` is only needed in production (Railway). Leave it unset locally — the Vite dev proxy handles cross-origin requests.
 
 ---
 
