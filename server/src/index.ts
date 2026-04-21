@@ -12,8 +12,29 @@ app.use(express.json());
 
 const server = new ApolloServer({ schema, introspection: true });
 
+const allowedOrigin = process.env.CLIENT_ORIGIN ?? "*";
+
+function setCORSHeaders(req: Request, res: Response) {
+  const requestOrigin = req.headers["origin"];
+  const origin =
+    allowedOrigin === "*" || requestOrigin === allowedOrigin
+      ? (requestOrigin ?? "*")
+      : allowedOrigin;
+  res.setHeader("Access-Control-Allow-Origin", origin);
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+}
+
 server.start().then(() => {
+  app.options("/graphql", (req: Request, res: Response) => {
+    setCORSHeaders(req, res);
+    res.sendStatus(204);
+  });
+
   app.post("/graphql", async (req: Request, res: Response) => {
+    setCORSHeaders(req, res);
+
     const headers = new HeaderMap();
     for (const [k, v] of Object.entries(req.headers)) {
       if (v !== undefined) headers.set(k, Array.isArray(v) ? v.join(", ") : v);
