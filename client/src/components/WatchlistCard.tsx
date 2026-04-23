@@ -72,7 +72,8 @@ export default function WatchlistCard({ id, mediaType, status, rating, media }: 
           <p className="wl-genres">{media.genres.slice(0, 3).join(", ")}</p>
         )}
         <div className="wl-controls">
-          <select value={status} onChange={handleStatusChange}>
+          <label htmlFor={`status-${id}`} className="sr-only">Status for {media.title}</label>
+          <select id={`status-${id}`} value={status} onChange={handleStatusChange}>
             {Object.entries(STATUS_LABELS).map(([val, label]) => (
               <option key={val} value={val}>{label}</option>
             ))}

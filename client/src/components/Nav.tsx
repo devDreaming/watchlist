@@ -32,6 +32,12 @@ export default function Nav({ activeView, onNavigate }: NavProps) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false); };
+    if (menuOpen) document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [menuOpen]);
+
   return (
     <nav className="nav">
       <div className="nav-inner">
@@ -55,6 +61,8 @@ export default function Nav({ activeView, onNavigate }: NavProps) {
             className="nav-user-btn"
             onClick={() => setMenuOpen((o) => !o)}
             aria-label="User menu"
+            aria-expanded={menuOpen}
+            aria-haspopup="true"
           >
             <RiUserLine size={18} />
           </button>

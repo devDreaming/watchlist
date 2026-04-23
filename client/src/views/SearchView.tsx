@@ -31,7 +31,9 @@ export default function SearchView() {
     <div className="search-view">
       <h1 className="view-title">Search Movies & TV Shows</h1>
       <form className="search-form" onSubmit={handleSearch}>
+        <label htmlFor="search-input" className="sr-only">Search for movies or TV shows</label>
         <input
+          id="search-input"
           type="text"
           className="search-input"
           placeholder="Search for a movie or TV show..."

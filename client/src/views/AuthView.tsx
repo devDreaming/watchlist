@@ -83,7 +83,7 @@ export default function AuthView() {
 
   if (step === "landing") {
     return (
-      <div className="auth-view">
+      <main className="auth-view">
         <PosterBackdrop paths={posterPaths} />
         <div className="auth-overlay" />
         <div className="auth-landing">
@@ -102,12 +102,12 @@ export default function AuthView() {
             </button>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="auth-view">
+    <main className="auth-view">
       <PosterBackdrop paths={posterPaths} />
       <div className="auth-overlay" />
       <div className="auth-card">
@@ -120,7 +120,9 @@ export default function AuthView() {
           </button>
         </div>
         <form className="auth-form" onSubmit={handleSubmit}>
+          <label htmlFor="auth-email" className="sr-only">Email</label>
           <input
+            id="auth-email"
             type="email"
             placeholder="Email"
             value={email}
@@ -128,7 +130,9 @@ export default function AuthView() {
             required
             autoFocus
           />
+          <label htmlFor="auth-password" className="sr-only">Password</label>
           <input
+            id="auth-password"
             type="password"
             placeholder="Password"
             value={password}
@@ -136,13 +140,17 @@ export default function AuthView() {
             required
           />
           {step === "register" && (
-            <input
-              type="password"
-              placeholder="Confirm password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
+            <>
+              <label htmlFor="auth-confirm-password" className="sr-only">Confirm password</label>
+              <input
+                id="auth-confirm-password"
+                type="password"
+                placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </>
           )}
           {error && <p className="auth-error">{error}</p>}
           <button type="submit" className="btn-auth" disabled={loading}>
@@ -161,6 +169,6 @@ export default function AuthView() {
           )}
         </p>
       </div>
-    </div>
+    </main>
   );
 }
